@@ -21,3 +21,4 @@ def load_jobs_from_db():
         rows_as_mappings = result.mappings().all()
         jobs_list = [dict(r) for r in rows_as_mappings]
         return jobs_list
+    
