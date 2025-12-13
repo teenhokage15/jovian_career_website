@@ -1,5 +1,5 @@
-from flask import Flask, render_template, jsonify
-from database import load_jobs_from_db, load_job_from_db
+from flask import Flask, render_template, jsonify, request
+from database import load_jobs_from_db, load_job_from_db, add_application_to_db
 from dotenv import load_dotenv
 load_dotenv()  # loads .env into os.environ
 
@@ -26,9 +26,15 @@ def list_jobs():
 @app.route("/jobs/<id>")
 def show_job(id):
     job = load_job_from_db(id)
-    return render_template("job_page.html",
-                            job=job)
+    return render_template("job_page.html", job=job,)
 
+@app.route("/job/<id>/apply", methods=['POST'])
+def apply_to_job(id):
+    job = load_job_from_db(id)
+    add_application_to_db(id, data)
+    data = request.form
+    return render_template("application_submitted.html",
+                           application = data)
 
 if __name__ == "__main__":
     print("Starting Flask app...")
@@ -36,7 +42,7 @@ if __name__ == "__main__":
 
 
 
-
+ 
 # # DB_HOST=gateway01.ap-southeast-1.prod.aws.tidbcloud.com
 # DB_PORT=4000
 # DB_USERNAME='3GxHxErWsrD7EfV.root'
